@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/Masterminds/squirrel"
+	"github.com/jmoiron/sqlx"
 	"github.com/tianhongw/tinyid/model"
 )
 
@@ -18,10 +19,10 @@ func NewTinyIdRepository(r *Repository) *TinyIdRepository {
 }
 
 func (r *TinyIdRepository) TableName() string {
-	return "tiny_id"
+	return "tiny_id_info"
 }
 
-func (r *TinyIdRepository) GetTinyIdByBizType(bizType string) (*model.TinyId, error) {
+func (r *TinyIdRepository) GetTinyIdByBizType(db *sqlx.DB, bizType string) (*model.TinyId, error) {
 	sql, args := squirrel.Select("*").
 		From(r.TableName()).
 		Where(squirrel.Eq{
@@ -30,8 +31,6 @@ func (r *TinyIdRepository) GetTinyIdByBizType(bizType string) (*model.TinyId, er
 
 	tinyId := new(model.TinyId)
 
-	db := r.Repository.DB.GetConn()
-
 	if err := db.Get(tinyId, db.Rebind(sql), args...); err != nil {
 		return nil, err
 	}
@@ -39,7 +38,7 @@ func (r *TinyIdRepository) GetTinyIdByBizType(bizType string) (*model.TinyId, er
 	return tinyId, nil
 }
 
-func (r *TinyIdRepository) UpdateTinyId(id uint64, newMaxId, oldMaxId, version int64) (bool, error) {
+func (r *TinyIdRepository) UpdateTinyId(db *sqlx.DB, id uint64, newMaxId, oldMaxId, version int64) (bool, error) {
 	sql, args, err := squirrel.Update(r.TableName()).
 		Set("max_id", newMaxId).
 		Set("version", version+1).
@@ -53,8 +52,6 @@ func (r *TinyIdRepository) UpdateTinyId(id uint64, newMaxId, oldMaxId, version i
 	if err != nil {
 		return false, err
 	}
-
-	db := r.Repository.DB.GetConn()
 
 	execResult, err := db.Exec(db.Rebind(sql), args...)
 	if err != nil {

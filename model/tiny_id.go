@@ -5,7 +5,6 @@ import "time"
 type TinyId struct {
 	ID         uint64    `db:"id"`
 	BizType    string    `db:"biz_type"`
-	BeginId    int64     `db:"begin_id"`
 	MaxId      int64     `db:"max_id"`
 	Step       int       `db:"step"`
 	Delta      int       `db:"delta"`

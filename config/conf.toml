@@ -1,0 +1,19 @@
+port = 8080
+
+loading_percent = 70
+
+[log]
+type = "zap"
+level = "DEBUG"
+format = "plain"
+outputs = ["stdout"]
+errorOutputs = ["stderr"]
+
+[db]
+host = ["tinyid_db"]
+port = [31000]
+username = ["tinyid"]
+password = ["tinyid123"]
+name = ["tinyid"]
+maxIdleConns = 10
+maxOpenConns = 10

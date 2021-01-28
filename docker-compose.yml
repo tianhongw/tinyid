@@ -1,0 +1,46 @@
+version: '3'
+services:
+  #Tiny id Service
+  tinyid:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: tinyid
+    container_name: tinyid
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config/conf.toml:/opt/tinyid/config/conf.toml
+    networks:
+      - tinyid-network
+    depends_on:
+      - "tinyid_db"
+  #Mysql Service
+  tinyid_db:
+    image: mysql:5.7.22
+    container_name: tinyid_db
+    restart: unless-stopped
+    ports:
+      - "31000:31000"
+    volumes:
+      - tinyid-db:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d/:ro
+    environment:
+      MYSQL_DATABASE: tinyid
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_USER: tinyid
+      MYSQL_PASSWORD: tinyid123
+      MYSQL_TCP_PORT: 31000
+    networks:
+      - tinyid-network
+
+#Docker Networks
+networks:
+  tinyid-network:
+    driver: bridge
+
+#Volumes
+volumes:
+  tinyid-db:
+    driver: local

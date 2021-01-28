@@ -13,8 +13,10 @@ func GetConfig() *Config {
 }
 
 type Config struct {
-	Log *LogOptions `mapstructure:"log"`
-	DB  *DBOptions  `mapstructure:"db"`
+	Log            *LogOptions `mapstructure:"log"`
+	DB             *DBOptions  `mapstructure:"db"`
+	LoadingPercent int         `mapstructure:"loading_percent"`
+	Port           int         `mapstructure:"port"`
 }
 
 func (c *Config) Validate() error {
@@ -24,6 +26,15 @@ func (c *Config) Validate() error {
 
 	if c.DB == nil {
 		return errors.New("nil database config")
+	}
+
+	if c.LoadingPercent <= 0 ||
+		c.LoadingPercent >= 100 {
+		return errors.New("invalid loading percent")
+	}
+
+	if c.Port <= 1024 {
+		return errors.New("invalid app port")
 	}
 
 	if len(c.DB.Host) == 0 ||
