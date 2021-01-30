@@ -1,0 +1,43 @@
+* Quick Start
+** Build and run
+*** clone the repo
+  #+begin_src  shell
+    git clone https://github.com/tianhongw/tinyid.git
+
+    cd tinyid
+  #+end_src
+*** start the server using docker-compose
+   #+begin_src shell
+     make up
+   #+end_src
+** Make a request
+   #+begin_src shell
+     curl http://127.0.0.1:8080/tinyid/next_id?type=test&size=5
+   #+end_src
+   Your'll get the response like either of the following depending on the database selected at random:
+   #+begin_src json
+     {
+         "id_list": [
+             1,
+             3,
+             5,
+             7,
+             9
+         ]
+     }
+   #+end_src
+   #+begin_src json
+     {
+         "id_list": [
+             2,
+             4,
+             6,
+             8,
+             10
+         ]
+     }
+   #+end_src
+
+* Architecture
+
+  [[tinyid.png]]
