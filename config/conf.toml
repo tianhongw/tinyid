@@ -10,10 +10,10 @@ outputs = ["stdout"]
 errorOutputs = ["stderr"]
 
 [db]
-host = ["tinyid_db"]
-port = [31000]
-username = ["tinyid"]
-password = ["tinyid123"]
-name = ["tinyid"]
+host = ["tinyid_db_1", "tinyid_db_2"]
+port = [31000, 31001]
+username = ["tinyid", "tinyid"]
+password = ["tinyid123", "tinyid123"]
+name = ["tinyid", "tinyid"]
 maxIdleConns = 10
 maxOpenConns = 10

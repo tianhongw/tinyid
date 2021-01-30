@@ -14,4 +14,4 @@ CREATE TABLE `tiny_id_info` (
   UNIQUE KEY `uniq_biz_type` (`biz_type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-INSERT INTO tiny_id_info SET biz_type = "test", max_id = 0, step = 1000, delta = 1, remainder = 0, create_time = now();
+INSERT INTO tiny_id_info SET biz_type = "test", max_id = 0, step = 1000, delta = 2, remainder = 1, create_time = now();

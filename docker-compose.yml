@@ -15,23 +15,42 @@ services:
     networks:
       - tinyid-network
     depends_on:
-      - "tinyid_db"
-  #Mysql Service
-  tinyid_db:
+      - "tinyid_db_1"
+      - "tinyid_db_2"
+  #Mysql Service 1
+  tinyid_db_1:
     image: mysql:5.7.22
-    container_name: tinyid_db
+    container_name: tinyid_db_1
     restart: unless-stopped
     ports:
       - "31000:31000"
     volumes:
-      - tinyid-db:/var/lib/mysql
-      - ./sql:/docker-entrypoint-initdb.d/:ro
+      - tinyid-db-1:/var/lib/mysql
+      - ./sql/db1:/docker-entrypoint-initdb.d/:ro
     environment:
       MYSQL_DATABASE: tinyid
       MYSQL_ROOT_PASSWORD: root123
       MYSQL_USER: tinyid
       MYSQL_PASSWORD: tinyid123
       MYSQL_TCP_PORT: 31000
+    networks:
+      - tinyid-network
+  #Mysql Service 2
+  tinyid_db_2:
+    image: mysql:5.7.22
+    container_name: tinyid_db_2
+    restart: unless-stopped
+    ports:
+      - "31001:31001"
+    volumes:
+      - tinyid-db-2:/var/lib/mysql
+      - ./sql/db2:/docker-entrypoint-initdb.d/:ro
+    environment:
+      MYSQL_DATABASE: tinyid
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_USER: tinyid
+      MYSQL_PASSWORD: tinyid123
+      MYSQL_TCP_PORT: 31001
     networks:
       - tinyid-network
 
@@ -42,5 +61,7 @@ networks:
 
 #Volumes
 volumes:
-  tinyid-db:
+  tinyid-db-1:
+    driver: local
+  tinyid-db-2:
     driver: local
