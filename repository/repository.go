@@ -11,6 +11,7 @@ type Repository struct {
 	DB     *conn.DB
 	Logger log.Logger
 
+	Token  *TokenRepository
 	TinyId *TinyIdRepository
 }
 
@@ -36,6 +37,7 @@ func NewRepository(db *conn.DB, opts ...Option) (*Repository, error) {
 		o(r)
 	}
 
+	r.Token = NewTokenRepository(r)
 	r.TinyId = NewTinyIdRepository(r)
 
 	return r, nil

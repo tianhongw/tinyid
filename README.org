@@ -12,7 +12,7 @@
    #+end_src
 ** Make a request
    #+begin_src shell
-     curl http://127.0.0.1:8080/tinyid/next_id?type=test&size=5
+     curl http://127.0.0.1:8080/tinyid/next_id?type=test&size=5&token=abc
    #+end_src
    Your'll get the response like either of the following depending on the database selected at random:
    #+begin_src json

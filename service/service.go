@@ -13,6 +13,7 @@ type Service struct {
 	Conf   *config.Config
 	Logger log.Logger
 
+	Token  *TokenService
 	TinyId *TinyIdService
 }
 
@@ -44,6 +45,7 @@ func NewService(repo *repository.Repository, opts ...Option) (*Service, error) {
 		o(srv)
 	}
 
+	srv.Token = NewTokenService(srv)
 	srv.TinyId = NewTinyIdService(srv)
 
 	return srv, nil

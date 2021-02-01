@@ -14,4 +14,17 @@ CREATE TABLE `tiny_id_info` (
   UNIQUE KEY `uniq_biz_type` (`biz_type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-INSERT INTO tiny_id_info SET biz_type = "test", max_id = 0, step = 1000, delta = 2, remainder = 1, create_time = now();
+INSERT INTO tiny_id_info SET biz_type = "test", max_id = 0, step = 1000, delta = 2, remainder = 1, update_time = now(), create_time = now();
+
+CREATE TABLE `tiny_id_token` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `biz_type` varchar(63) NOT NULL,
+  `token` varchar(128) NOT NULL,
+  `description` varchar(1024) NOT NULL DEFAULT '',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_biz_type` (`biz_type`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+INSERT INTO tiny_id_token SET biz_type = "test", token = "abc", update_time = now(), create_time = now();
